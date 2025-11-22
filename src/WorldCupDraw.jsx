@@ -96,13 +96,15 @@ function deepCopyGroups() {
 -----------------------------------------------------------*/
 function Flag({ team }) {
   const code = FLAG_CODE[team];
-
   if (!code)
     return <span className="flagPlaceholder">🏳️</span>;
 
+  // ✅ Correct Vite + GitHub Pages asset handling
+  const flagUrl = new URL(`./assets/flags/${code}.svg`, import.meta.url).href;
+
   return (
     <img
-      src={`/src/assets/flags/${code}.svg`}
+      src={flagUrl}
       alt={team}
       className="flag"
     />
@@ -121,8 +123,6 @@ export default function WorldCupDraw() {
   const [dark, setDark] = useState(true);
 
   useEffect(() => {
-    // If dark = true → normal body (dark variables)
-    // If dark = false → add .light (light variables)
     document.body.classList.toggle("light", !dark);
   }, [dark]);
 
